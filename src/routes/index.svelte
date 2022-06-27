@@ -33,8 +33,8 @@
 </script>
 
 <svelte:head>
-	<title>Home</title>
-	<meta name="description" content="Svelte demo app" />
+	<title>Counting down to our anniversary</title>
+	<meta name="description" content="Web app for counting down to our anniversary" />
 </svelte:head>
 
 <svelte:body on:click={handleClick} />
