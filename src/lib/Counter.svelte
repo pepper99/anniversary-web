@@ -27,10 +27,7 @@
 	let daySecond = tweened((9 - Math.floor(days / 10)) * digitHeight, { duration: 300 });
 	let dayThird = tweened((9 - Math.floor(days % 10)) * digitHeight, { duration: 300 });
 
-	const val = tweened(0, { duration: 500 });
-
 	onMount(() => {
-		console.log(days, hours, minutes, seconds);
 		timer = setInterval(() => {
 			countdown -= 1;
 		}, 1000);
