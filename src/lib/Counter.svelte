@@ -5,7 +5,7 @@
 	export let countdown = 0;
 	const dispatch = createEventDispatcher();
 
-	const digitHeight = 108;
+	const digitHeight = 6.75;
 
 	let timer: NodeJS.Timeout | null = null;
 	const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].reverse();
@@ -67,108 +67,125 @@
 </script>
 
 <div class="container">
-	<ul>
-		{#each numbers as num, _}
-			<li class="num" style="transform: translateY(-{$dayFirst}px);">
-				<span>{num}</span>
-			</li>
-		{/each}
-	</ul>
+	<div class="digits-container">
+		<ul>
+			{#each numbers as num, _}
+				<li class="num" style="transform: translateY(-{$dayFirst}rem);">
+					<span>{num}</span>
+				</li>
+			{/each}
+		</ul>
+		<ul>
+			{#each numbers as num, _}
+				<li class="num" style="transform: translateY(-{$daySecond}rem);">
+					<span>{num}</span>
+				</li>
+			{/each}
+		</ul>
+		<ul>
+			{#each numbers as num, _}
+				<li class="num" style="transform: translateY(-{$dayThird}rem);">
+					<span>{num}</span>
+				</li>
+			{/each}
+		</ul>
+	</div>
 
-	<ul>
-		{#each numbers as num, _}
-			<li class="num" style="transform: translateY(-{$daySecond}px);">
-				<span>{num}</span>
-			</li>
-		{/each}
-	</ul>
+	<p class="digit-seperator">:</p>
 
-	<ul>
-		{#each numbers as num, _}
-			<li class="num" style="transform: translateY(-{$dayThird}px);">
-				<span>{num}</span>
-			</li>
-		{/each}
-	</ul>
+	<div class="digits-container">
+		<ul>
+			{#each numbers as num, _}
+				<li class="num" style="transform: translateY(-{$hourH}rem);">
+					<span>{num}</span>
+				</li>
+			{/each}
+		</ul>
+		<ul>
+			{#each numbers as num, _}
+				<li class="num" style="transform: translateY(-{$hourL}rem);">
+					<span>{num}</span>
+				</li>
+			{/each}
+		</ul>
+	</div>
 
-	<p>:</p>
+	<p class="digit-seperator">:</p>
 
-	<ul>
-		{#each numbers as num, _}
-			<li class="num" style="transform: translateY(-{$hourH}px);">
-				<span>{num}</span>
-			</li>
-		{/each}
-	</ul>
+	<div class="digits-container">
+		<ul>
+			{#each numbers as num, _}
+				<li class="num" style="transform: translateY(-{$minuteH}rem);">
+					<span>{num}</span>
+				</li>
+			{/each}
+		</ul>
+		<ul>
+			{#each numbers as num, _}
+				<li class="num" style="transform: translateY(-{$minuteL}rem);">
+					<span>{num}</span>
+				</li>
+			{/each}
+		</ul>
+	</div>
 
-	<ul>
-		{#each numbers as num, _}
-			<li class="num" style="transform: translateY(-{$hourL}px);">
-				<span>{num}</span>
-			</li>
-		{/each}
-	</ul>
+	<p class="digit-seperator">:</p>
 
-	<p>:</p>
-
-	<ul>
-		{#each numbers as num, _}
-			<li class="num" style="transform: translateY(-{$minuteH}px);">
-				<span>{num}</span>
-			</li>
-		{/each}
-	</ul>
-
-	<ul>
-		{#each numbers as num, _}
-			<li class="num" style="transform: translateY(-{$minuteL}px);">
-				<span>{num}</span>
-			</li>
-		{/each}
-	</ul>
-
-	<p>:</p>
-
-	<ul>
-		{#each numbers as num, _}
-			<li class="num" style="transform: translateY(-{$secondH}px);">
-				<span>{num}</span>
-			</li>
-		{/each}
-	</ul>
-
-	<ul>
-		{#each numbers as num, _}
-			<li class="num" style="transform: translateY(-{$secondL}px);">
-				<span>{num}</span>
-			</li>
-		{/each}
-	</ul>
+	<div class="digits-container">
+		<ul>
+			{#each numbers as num, _}
+				<li class="num" style="transform: translateY(-{$secondH}rem);">
+					<span>{num}</span>
+				</li>
+			{/each}
+		</ul>
+		<ul>
+			{#each numbers as num, _}
+				<li class="num" style="transform: translateY(-{$secondL}rem);">
+					<span>{num}</span>
+				</li>
+			{/each}
+		</ul>
+	</div>
 </div>
 
 <style>
+	.digits-container {
+		display: flex;
+	}
+
 	ul {
 		display: inline-block;
 		list-style: none;
 		padding-left: 0;
-		height: 94px;
+		height: 5.875rem;
 		overflow: hidden;
 	}
 
 	.num {
-		font-size: 94px;
+		font-size: 5.875rem;
 		user-select: none;
 	}
-	
+
 	.container {
 		display: flex;
 		justify-content: center;
 		align-items: center;
 	}
-	
+
+	@media (max-width: 480px) {
+		.container {
+			flex-direction: column;
+		}
+
+		.digit-seperator {
+			display: none;
+		}
+	}
+
 	p {
 		margin: 0 0;
-		font-size: 94px;
+		font-size: 5.875rem;
 		user-select: none;
 	}
 </style>
