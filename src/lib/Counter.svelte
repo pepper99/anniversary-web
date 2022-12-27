@@ -5,12 +5,12 @@
 	export let countdown = 0;
 	const dispatch = createEventDispatcher();
 
-	const digitHeight = 6.75;
+	const digitHeight = 105;
 
 	let timer: NodeJS.Timeout | null = null;
 	const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].reverse();
 	$: minutes = Math.floor((countdown / 60) % 60);
-	$: hours = Math.floor((countdown / 60 / 60) % 60);
+	$: hours = Math.floor((countdown / 60 / 60) % 24);
 	$: days = Math.floor(countdown / 60 / 60 / 24);
 	$: seconds = countdown % 60;
 
@@ -67,40 +67,21 @@
 	<div class="digits-container">
 		<ul>
 			{#each numbers as num, _}
-				<li class="num" style="transform: translateY(-{$dayFirst}rem);">
+				<li class="num" style="transform: translateY(-{$dayFirst}px);">
 					<span>{num}</span>
 				</li>
 			{/each}
 		</ul>
 		<ul>
 			{#each numbers as num, _}
-				<li class="num" style="transform: translateY(-{$daySecond}rem);">
+				<li class="num" style="transform: translateY(-{$daySecond}px);">
 					<span>{num}</span>
 				</li>
 			{/each}
 		</ul>
 		<ul>
 			{#each numbers as num, _}
-				<li class="num" style="transform: translateY(-{$dayThird}rem);">
-					<span>{num}</span>
-				</li>
-			{/each}
-		</ul>
-	</div>
-
-	<p class="digit-seperator">:</p>
-
-	<div class="digits-container">
-		<ul>
-			{#each numbers as num, _}
-				<li class="num" style="transform: translateY(-{$hourH}rem);">
-					<span>{num}</span>
-				</li>
-			{/each}
-		</ul>
-		<ul>
-			{#each numbers as num, _}
-				<li class="num" style="transform: translateY(-{$hourL}rem);">
+				<li class="num" style="transform: translateY(-{$dayThird}px);">
 					<span>{num}</span>
 				</li>
 			{/each}
@@ -112,14 +93,14 @@
 	<div class="digits-container">
 		<ul>
 			{#each numbers as num, _}
-				<li class="num" style="transform: translateY(-{$minuteH}rem);">
+				<li class="num" style="transform: translateY(-{$hourH}px);">
 					<span>{num}</span>
 				</li>
 			{/each}
 		</ul>
 		<ul>
 			{#each numbers as num, _}
-				<li class="num" style="transform: translateY(-{$minuteL}rem);">
+				<li class="num" style="transform: translateY(-{$hourL}px);">
 					<span>{num}</span>
 				</li>
 			{/each}
@@ -131,14 +112,33 @@
 	<div class="digits-container">
 		<ul>
 			{#each numbers as num, _}
-				<li class="num" style="transform: translateY(-{$secondH}rem);">
+				<li class="num" style="transform: translateY(-{$minuteH}px);">
 					<span>{num}</span>
 				</li>
 			{/each}
 		</ul>
 		<ul>
 			{#each numbers as num, _}
-				<li class="num" style="transform: translateY(-{$secondL}rem);">
+				<li class="num" style="transform: translateY(-{$minuteL}px);">
+					<span>{num}</span>
+				</li>
+			{/each}
+		</ul>
+	</div>
+
+	<p class="digit-seperator">:</p>
+
+	<div class="digits-container">
+		<ul>
+			{#each numbers as num, _}
+				<li class="num" style="transform: translateY(-{$secondH}px);">
+					<span>{num}</span>
+				</li>
+			{/each}
+		</ul>
+		<ul>
+			{#each numbers as num, _}
+				<li class="num" style="transform: translateY(-{$secondL}px);">
 					<span>{num}</span>
 				</li>
 			{/each}
@@ -155,12 +155,12 @@
 		display: inline-block;
 		list-style: none;
 		padding-left: 0;
-		height: 5.875rem;
+		height: 94px;
 		overflow: hidden;
 	}
 
 	.num {
-		font-size: 5.875rem;
+		font-size: 94px;
 		user-select: none;
 	}
 
@@ -182,7 +182,18 @@
 
 	p {
 		margin: 0 0;
-		font-size: 5.875rem;
+		font-size: 94px;
 		user-select: none;
+		line-height: 1em;
+	}
+	
+	span {
+		font-size: 105px;
+		line-height: 1em;
+	}
+	
+	li {
+		height: 105px;
+		margin: 0 0;
 	}
 </style>

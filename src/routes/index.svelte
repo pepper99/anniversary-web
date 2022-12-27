@@ -7,24 +7,23 @@
 	import Counter from '$lib/Counter.svelte';
 	import { tick } from 'svelte';
 
-	let done = false;
-
 	let today = new Date();
-	let anni = new Date(today.getFullYear(), 1, 13);
-	let yearCount = today.getFullYear() - 2022;
+	let anni = new Date(today.getFullYear(), 11, 27);
+	let yearCount = today.getFullYear() - 2021;
+	let done = today.getDate() === anni.getDate() && today.getMonth() === anni.getMonth();
 
 	if (today.getMonth() > 1 || (today.getMonth() == 1 && today.getDate() > 13)) {
 		anni.setFullYear(anni.getFullYear() + 1);
 	}
 	let remaining = (anni.getTime() - today.getTime()) / 1000;
 
-	let x = 0;
-	let y = 0;
-	let isVisible = false;
+	let x = '0px';
+	let y = '50%';
+	let isVisible = done;
 
 	const handleClick = async (e: MouseEvent) => {
-		x = e.clientX;
-		y = e.clientY;
+		x = `${e.clientX}`;
+		y = `${e.clientY}`;
 
 		isVisible = false;
 		await tick();
@@ -41,13 +40,14 @@
 
 <section class={`container ${done ? 'done' : ''}`}>
 	{#if done && isVisible}
-		<ConfettiExplosion --x="{x}px" --y="{y}px" />
+		<ConfettiExplosion --x={x} --y={y} />
 	{/if}
 	<div class="inner">
 		{#if !done}
 			<Counter countdown={remaining} on:completed={() => (done = true)} />
 		{/if}
 		{#if done}
+			<div class="bg" />
 			<h1>{'I love you <3'}</h1>
 			<p>Happy {yearCount} year{yearCount > 1 ? 's' : ''} anniversary!!</p>
 			<p>🎉💕</p>
@@ -62,8 +62,44 @@
 		background-color: white;
 	}
 
-	.container.done {
+	.bg {
+		position: absolute;
+		z-index: -1;
+		background-image: url('$lib/assets/mumu.jpg');
+		filter: blur(4px);
+		-webkit-filter: blur(4px);
+		height: 100%;
+		width: 100%;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
 		background-color: #fcddea;
+	}
+
+	.container.done {
+		background-color: transparent;
+	}
+
+	h1 {
+		--bg-size: 400%;
+		--color-one: rgb(248, 146, 188);
+		--color-two: rgb(219, 14, 59);
+		font-size: clamp(3rem, 25vmin, 8rem);
+		background: linear-gradient(90deg, var(--color-one), var(--color-two), var(--color-one)) 0 0 /
+			var(--bg-size) 100%;
+		color: transparent;
+		-webkit-background-clip: text;
+		background-clip: text;
+		animation: move-bg 8s infinite linear;
+	}
+	@keyframes move-bg {
+		to {
+			background-position: var(--bg-size) 0;
+		}
+	}
+
+	p {
+		color: white;
 	}
 
 	.inner {
@@ -73,6 +109,13 @@
 		justify-content: center;
 		align-items: center;
 		text-align: center;
+	}
+
+	.pic {
+		margin: 8px 32px;
+		height: 300px;
+		width: auto;
+		border-radius: 16px;
 	}
 
 	h1 {
