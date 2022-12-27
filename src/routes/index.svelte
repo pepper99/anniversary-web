@@ -8,7 +8,7 @@
 	import { tick } from 'svelte';
 
 	let today = new Date();
-	let anni = new Date(today.getFullYear(), 11, 27);
+	let anni = new Date(today.getFullYear(), 1, 13);
 	let yearCount = today.getFullYear() - 2021;
 	let done = today.getDate() === anni.getDate() && today.getMonth() === anni.getMonth();
 
