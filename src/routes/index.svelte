@@ -65,15 +65,13 @@
 					<ConfettiExplosion --x="50vw" --y="50vh" />
 				{/if}
 			</div>
-		{/if}
-		{#if !done}
-			<Counter countdown={remaining} on:completed={() => (done = true)} />
-		{/if}
-		{#if done}
 			<div class="bg" />
 			<h1>{'I love you <3'}</h1>
 			<p>Happy {yearCount}{getOrdinal(yearCount)} anniversary!!</p>
 			<p>🎉💕</p>
+		{/if}
+		{#if !done}
+			<Counter countdown={remaining} on:completed={() => (done = true)} />
 		{/if}
 	</div>
 </section>
