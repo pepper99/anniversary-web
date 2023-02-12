@@ -17,13 +17,29 @@
 	}
 	let remaining = (anni.getTime() - today.getTime()) / 1000;
 
-	let x = '0px';
+	let x = '50%';
 	let y = '50%';
-	let isVisible = done;
+	let isVisible = false;
+	let initialVisible = done;
+
+	function getOrdinal(n: number) {
+		let ord = 'th';
+
+		if (n % 10 == 1 && n % 100 != 11) {
+			ord = 'st';
+		} else if (n % 10 == 2 && n % 100 != 12) {
+			ord = 'nd';
+		} else if (n % 10 == 3 && n % 100 != 13) {
+			ord = 'rd';
+		}
+
+		return ord;
+	}
 
 	const handleClick = async (e: MouseEvent) => {
-		x = `${e.clientX}`;
-		y = `${e.clientY}`;
+		x = `${e.clientX}px`;
+		y = `${e.clientY}px`;
+		console.log(x, y);
 
 		isVisible = false;
 		await tick();
@@ -39,17 +55,24 @@
 <svelte:body on:click={handleClick} />
 
 <section class={`container ${done ? 'done' : ''}`}>
-	{#if done && isVisible}
-		<ConfettiExplosion --x={x} --y={y} />
-	{/if}
 	<div class="inner">
+		{#if done}
+			<div class="confetti-container">
+				{#if isVisible}
+					<ConfettiExplosion --x={x} --y={y} />
+				{/if}
+				{#if initialVisible}
+					<ConfettiExplosion --x="50vw" --y="50vh" />
+				{/if}
+			</div>
+		{/if}
 		{#if !done}
 			<Counter countdown={remaining} on:completed={() => (done = true)} />
 		{/if}
 		{#if done}
 			<div class="bg" />
 			<h1>{'I love you <3'}</h1>
-			<p>Happy {yearCount} year{yearCount > 1 ? 's' : ''} anniversary!!</p>
+			<p>Happy {yearCount}{getOrdinal(yearCount)} anniversary!!</p>
 			<p>🎉💕</p>
 		{/if}
 	</div>
@@ -60,6 +83,12 @@
 		height: 100%;
 		width: 100%;
 		background-color: white;
+	}
+
+	.confetti-container {
+		position: absolute;
+		height: 100vh;
+		width: 100vw;
 	}
 
 	.bg {
