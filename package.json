@@ -34,6 +34,7 @@
 	"dependencies": {
 		"@fontsource/fira-mono": "^4.5.0",
 		"cookie": "^0.4.1",
-		"svelte-confetti-explosion": "^0.2.0"
+		"svelte-confetti-explosion": "^0.2.0",
+		"svelte-youtube": "^0.0.2"
 	}
 }

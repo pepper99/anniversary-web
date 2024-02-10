@@ -6,6 +6,7 @@
 	import { ConfettiExplosion } from 'svelte-confetti-explosion';
 	import Counter from '$lib/Counter.svelte';
 	import { tick } from 'svelte';
+	import YouTube from 'svelte-youtube';
 
 	let today = new Date();
 	let anni = new Date(today.getFullYear(), 1, 12);
@@ -39,11 +40,26 @@
 	const handleClick = async (e: MouseEvent) => {
 		x = `${e.clientX}px`;
 		y = `${e.clientY}px`;
-		console.log(x, y);
 
 		isVisible = false;
 		await tick();
 		isVisible = true;
+	};
+
+	let youtubeOptions = {
+		height: '80%',
+		width: '80%',
+		playerVars: {
+			mute: 0,
+			autoplay: 1,
+			enablejsapi: 1,
+			iv_load_policy: 3,
+			loop: 1,
+			playsinline: 1,
+			rel: 0,
+			showinfo: 0,
+			start: 0
+		}
 	};
 </script>
 
@@ -57,6 +73,9 @@
 <section class={`container ${done ? 'done' : ''}`}>
 	<div class="inner">
 		{#if done}
+			<div class="yt-container">
+				<YouTube videoId="wh9QLjk3M2k" options={youtubeOptions} />
+			</div>
 			<div class="confetti-container">
 				{#if isVisible}
 					<ConfettiExplosion --x={x} --y={y} />
@@ -81,6 +100,10 @@
 		height: 100%;
 		width: 100%;
 		background-color: white;
+	}
+
+	.yt-container {
+		z-index: 50;
 	}
 
 	.confetti-container {
