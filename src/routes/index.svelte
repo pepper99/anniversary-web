@@ -13,7 +13,7 @@
 	let yearCount = today.getFullYear() - 2021;
 	let done = today.getDate() === anni.getDate() && today.getMonth() === anni.getMonth();
 
-	if (today.getMonth() > 1 || (today.getMonth() == 1 && today.getDate() > 13)) {
+	if (anni < today) {
 		anni.setFullYear(anni.getFullYear() + 1);
 	}
 	let remaining = (anni.getTime() - today.getTime()) / 1000;
