@@ -5,13 +5,18 @@
 <script lang="ts">
 	import { ConfettiExplosion } from 'svelte-confetti-explosion';
 	import Counter from '$lib/Counter.svelte';
+	import BouncingLogo from '$lib/BouncingLogo.svelte';
 	import { tick } from 'svelte';
 	import YouTube from 'svelte-youtube';
+	import { writable } from 'svelte/store';
 
 	let today = new Date();
-	let anni = new Date(today.getFullYear(), 1, 12);
+	let anni = new Date(today.getFullYear(), 1, 11);
 	let yearCount = today.getFullYear() - 2021;
 	let done = today.getDate() === anni.getDate() && today.getMonth() === anni.getMonth();
+
+	let innerContainerWidth = 0;
+	let innerContainerHeight = 0;
 
 	if (anni < today) {
 		anni.setFullYear(anni.getFullYear() + 1);
@@ -37,6 +42,15 @@
 		return ord;
 	}
 
+	let catStores = writable([
+		{
+			parentWidth: innerContainerWidth,
+			parentHeight: innerContainerHeight,
+			startX: Number(x),
+			startY: Number(y)
+		}
+	]);
+
 	const handleClick = async (e: MouseEvent) => {
 		x = `${e.clientX}px`;
 		y = `${e.clientY}px`;
@@ -44,6 +58,15 @@
 		isVisible = false;
 		await tick();
 		isVisible = true;
+
+		if ($catStores.length < 5) {
+			$catStores[$catStores.length] = {
+				parentWidth: innerContainerWidth,
+				parentHeight: innerContainerHeight,
+				startX: e.clientX,
+				startY: e.clientY
+			};
+		}
 	};
 
 	let youtubeOptions = {
@@ -71,7 +94,11 @@
 <svelte:body on:click={handleClick} />
 
 <section class={`container ${done ? 'done' : ''}`}>
-	<div class="inner">
+	<div
+		class="inner"
+		bind:clientWidth={innerContainerWidth}
+		bind:clientHeight={innerContainerHeight}
+	>
 		{#if done}
 			<div class="yt-container">
 				<YouTube videoId="wh9QLjk3M2k" options={youtubeOptions} />
@@ -87,7 +114,17 @@
 			<div class="bg" />
 			<h1>{'I love you <3'}</h1>
 			<p>Happy {yearCount}{getOrdinal(yearCount)} anniversary!!</p>
-			<p>🎉💕</p>
+			<p>🎉😽😻🐈💕</p>
+
+			{#each $catStores as item}
+				<svelte:component
+					this={BouncingLogo}
+					parentWidth={innerContainerWidth}
+					parentHeight={innerContainerHeight}
+					startX={item.startX}
+					startY={item.startY}
+				/>
+			{/each}
 		{/if}
 		{#if !done}
 			<Counter countdown={remaining} on:completed={() => (done = true)} />
