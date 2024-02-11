@@ -11,7 +11,7 @@
 	import { writable } from 'svelte/store';
 
 	let today = new Date();
-	let anni = new Date(today.getFullYear(), 1, 11);
+	let anni = new Date(today.getFullYear(), 1, 12);
 	let yearCount = today.getFullYear() - 2021;
 	let done = today.getDate() === anni.getDate() && today.getMonth() === anni.getMonth();
 
